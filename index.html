@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Jeopardy</title>
+  <link href="https://fonts.googleapis.com/css?family=Copse&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:wght@600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="jeopardy.css">
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
+
+</head>
+
+<body class='.bg-light'>
+  <div class='jumbotron text-center hidden' id='jumbo'>
+    <div class='container' id='textHeader'>
+      <h1 class="display-1">Welcome to Jeopardy!</h1>
+      <p class="lead">I am your host - Omar Yousaf. <br>When you are ready to play, hit the "Start Game" button below
+        and answer
+        away.
+      </p>
+      <blockquote class='blockquote'>
+        <cite title="Alex Trebek">Don't minimize the importance of luck in determining life's course.</cite>
+        <footer class="blockquote-footer">
+          <cite title="Alex Trebek">Alex Trebek</cite></footer>
+      </blockquote>
+      <hr class="my-4" id='hr'>
+      <p>We are always looking to add more new features, so let us know what you think and follow us on social media:
+        @djofresh</p>
+      <div class='py-2'>
+        <button type="button" class="btn btn-success" id="start">Start Game</button>
+        <button type="button" class="btn btn-warning" id="restart">Restart Game</button>
+        <button type="button" class="btn btn-primary newBoard" id="newBoard">New Board</button>
+        <button type="button" class="btn btn-dark modeBtn" id="modeBtn">Dark Mode</button>
+      </div>
+
+
+    </div>
+  </div>
+  <div class='container'>
+    <table id="jeopardy" class='table jeopardy' id='table'>
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+
+
+  <script src="https://unpkg.com/jquery"></script>
+  <script src="https://unpkg.com/axios/dist/axios.js"></script>
+  <script src="https://unpkg.com/lodash"></script>
+  <script src="jeopardy.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+
+</body>
+
+</html>

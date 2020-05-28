@@ -1,0 +1,73 @@
+#jumbo {
+  background-color: rgb(179, 215, 242);
+  padding: 4rem;
+}
+
+#hr {
+  height: 20px;
+  border: 0;
+  box-shadow: 0 5px 5px -5px #ffffff inset;
+  border-style: solid;
+  border-color: #ffffff;
+  border-width: 1px 0 0 0;
+  border-radius: 20px;
+}
+
+hr:before {
+  display: block;
+  content: "";
+  height: 30px;
+  margin-top: -31px;
+  border-style: solid;
+  border-color: #8c8b8b;
+  border-width: 0 0 1px 0;
+  border-radius: 20px;
+}
+
+
+.jeopardy {
+  background-color: #060ce9;
+}
+
+#jeopardy {
+  text-align: center;
+  font-size: 9pt;
+  border-collapse: collapse;
+  color: white;
+}
+
+#jeopardy th,
+#jeopardy td {
+  border: solid 2px white;
+  width: 12em;
+  padding: 1em;
+}
+
+
+thead {
+  text-transform: uppercase;
+  font-family: Helvetica, sans-serif;
+  font-weight: bold;
+  height: 5em;
+  text-shadow: black 1px 1px;
+}
+
+td {
+  height: 120px;
+  width: 40px;
+  font-size: 1.3em;
+  font-family: Copse, serif;
+}
+
+td:hover {
+  cursor: pointer;
+  opacity: .7;
+}
+
+h1 {
+  font-family: 'Bangers', cursive;
+}
+
+p {
+  font-family: 'Montserrat', sans-serif;
+}
