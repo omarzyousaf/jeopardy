@@ -1,8 +1,31 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+	//====================================================
+	/*
+	ISSUES
+	1) I always had to push my data into an array outside of the function instead of utilizing
+	the promise function and using "return". When I tried the "return" method, every time I
+	called the function inside of another function, I was unable to retrieve the data! Is this a situation where I need to use .then()?
+
+	2) When I hit New Board, it clears the board. I am unable to run all the functions at once to get a new game started
+	so I split the functions up and left a few in "Start Game". Still, after hitting New Board - the answers show up before the questions.
+	Most importantly: the fillTable() function won't run when put along with the other functions. Why is this? This is the main reason
+	I used different buttons for START GAME and NEW BOARD.
+
+	3) I could not 
+	*/
+	//===================
+	//ISSUES:
+
+	//1) Pick RANDOM questions from the list. 
+	//2) FIX THE RESTART BUTTON!!!
+	//====================================================
+
+
+
+
 
 	// categories is the main data structure for the app; it looks like this:
-
 	//  [
 	//    { title: "Math",
 	//      clues: [
@@ -68,17 +91,21 @@ document.addEventListener("DOMContentLoaded", () => {
 					id: catId
 				}
 			});
-			// let answer = { //return
-			// 	//stored this as a variable and "pushed" into the empty array instead of using "return"
-			// 	title : res.data.title,
-			// 	clues : res.data.clues.map((clue) => {
-			// 		return {
-			// 			question : clue.question,
-			// 			answer   : clue.answer,
-			// 			showing  : null
-			// 		};
-			// 	})
-			// };
+
+			/*instead of using the map functionality below, I had to push the values to a globally scoped array.
+				let answer = { //return
+					//stored this as a variable and "pushed" into the empty array instead of using "return"
+					title : res.data.title,
+					clues : res.data.clues.map((clue) => {
+						return {
+							question : clue.question,
+							answer   : clue.answer,
+							showing  : null
+						};
+					})
+				};
+			*/
+
 			let clueArray = [];
 
 			for (let clue of res.data.clues) {
@@ -125,11 +152,11 @@ document.addEventListener("DOMContentLoaded", () => {
 			$('tbody').append(newTr);
 			catArray.map(function (cat) {
 				let newTd = document.createElement("TD");
+				//add numbers to each td instead of "?"
 				newTd.innerText = `${i+1}00`;
 				newTd.id = `td-${i}`;
 				newTd.style.color = "yellow"
 				newTd.style.fontSize = "2em"
-
 				newTr.append(newTd)
 			})
 		}
@@ -137,7 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	/** Handle clicking on a clue: show the question or answer.
-	 *
 	 * Uses .showing property on clue to determine what to show:
 	 * - if currently null, show question & set .showing to "question"
 	 * - if currently "question", show answer & set .showing to "answer"
@@ -152,30 +178,53 @@ document.addEventListener("DOMContentLoaded", () => {
 			let target = e.target
 			let columnCat = target.cellIndex
 			let clue = categoryInfo[columnCat].clueArray
+			console.log(e)
+			console.log(clue)
+			console.log(categoryInfo)
 			//use loop to get the column number		
 			for (let i = 0; i <= 4; i++) {
-				//If the selected TD has a value
+				let randomClueIdx = Math.floor(Math.random() * clue.length + 1)
+
+				//TESTING CODE FOR ACTIVE AND HIDDEN DISPLAY OF Q&A
+				// let question = document.createElement('div')
+				// question.innerText = clue[randomClueIdx].question
+				// question.style.color = "white"
+				// // question.style.fontSize = "1.5em"
+				// question.display = 'block'
+				// target.append(question)
+
+				// let answer = document.createElement('div')
+				// answer.innerTet = clue[randomClueIdx].answer
+				// answer.display = 'none'
+				// target.append(answer)
+
+				// if (question.display === 'block') {
+				// 	answer.display = 'block'
+				// 	question.display = 'none'
+				// }
+
+
+				//If the selected TD is included in catValues
 				if (catValues.includes(target.innerText)) {
+
 					//if column # matches selected TD, turn selecter TD into corresponding QUESTION
-					if (target.id === `td-${i}`) {
+					if (target.id == `td-${i}`) {
+
 						target.innerText = clue[i].question
 						target.style.color = "white"
 						target.style.fontSize = "1.5em"
 					}
 				} else {
-					//if TD is NOT a ?, match column # and turn selected TD into ANSWER
+					//If the column # matches the targete column #, turn selected TD into ANSWER
 					if (target.id === `td-${i}`) target.innerText = clue[i].answer
 				}
+
 			}
 		})
 	}
 
-
-	//Clearing board doesn't work, have to REFRESH the entire page. Why?
-
 	// }
 	/** Start game:
-	 *
 	 * - get random category Ids
 	 * - get data for each category
 	 * - create HTML table
@@ -183,7 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	async function setupAndStart() {
 		await getCategoryIds();
 		getCategory(categories);
-		// fillTable(categoryInfo); <---could not get this to work, had to implement a START button.
+		// fillTable(categoryInfo); <---could not get this to work here, had to implement a START button below.
 	}
 
 
@@ -212,7 +261,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 	/** On page load, setup and start & add event handler for clicking clues */
-	//   was unable to get the fillTable function working, implemented a START button instead	
+
+	//   was unable to get the fillTable function working on page Load as well, implemented a START button instead.	
 	$('document').ready(function (e) {
 		console.log('dom loaded')
 		setupAndStart();
@@ -223,24 +273,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-	//===================
-	/** 
-	ISSUES
-	I always had to push my data into an array outside of the function instead of utilizing
-	the promise function and using "return". When I tried the "return" method, every time I
-	called the function inside of another function, I was unable to retrieve the data!
 
-	2) When I hit New Board, it clers the board. I am unable to run all the functions at once to get a new game started
-	so I split the functions up and left a few in "Start Game". Still, after hitting New Board - the answers show up before the questions.
-	*/
-	//===================
+	//==================================
+	// EXTRA FEATURES NOT IN ASSIGNMENT
+	//==================================
 
-
-	//===================
-	// EXTRA FEATURES
-	//===================
-
-	//RESTART GAME BUTTON
+	//RESTART GAME BUTTON: clears boxes that were flipped over.
 	$('#restart').on('click', function (e) {
 		$('thead').text('')
 		$('tbody').text('')
@@ -248,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	}).hide().fadeIn(fade)
 
 
-	//NEW BOARD BUTTON
+	//NEW BOARD BUTTON: pop-up box to confirm if you want to refresh the page
 	$('#newBoard').on('click', function (e) {
 		Swal.fire({
 			title: 'Are you sure you want a New Board?',
@@ -264,18 +302,23 @@ document.addEventListener("DOMContentLoaded", () => {
 			}
 		})
 
-		// $('thead').text('');
-		// $('tbody').text('');
-		// categories = [];
-		// categoryInfo = [];
-		// setupAndStart();
-		// $('#start').prop('disabled', false);
-		// $('#restart').prop('disabled', true);
-		//fillTable() won't work, can't run at the same time?
-		// fillTable(categoryInfo);
+		/*instead of implementing the code below, I am refreshing the page. I could not avoid refreshing the page
+		  and simply having fillTable() run. This is the main issue I am having.
+		
+			$('thead').text('');
+			$('tbody').text('');
+			categories = [];
+			categoryInfo = [];
+			setupAndStart();
+			$('#start').prop('disabled', false);
+			$('#restart').prop('disabled', true);
+			fillTable() won't work, can't run at the same time?
+			fillTable(categoryInfo);
+		*/
 	}).hide().fadeIn(fade)
 
-	//Toggle for Light or Dark Mode
+
+	//Toggle for Light or Dark Mode: changes color of header and table.
 	$(".modeBtn").click(function () {
 		$(this).text(function (i, v) {
 			if (v === 'Light Mode') {
