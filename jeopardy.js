@@ -4,25 +4,19 @@ document.addEventListener("DOMContentLoaded", () => {
 	/*
 	ISSUES
 	1) I always had to push my data into an array outside of the function instead of utilizing
-	the promise function and using "return". When I tried the "return" method, every time I
-	called the function inside of another function, I was unable to retrieve the data! Is this a situation where I need to use .then()?
+	   the promise function and using "return". When I tried the "return" method, every time I
+	   called the function inside of another function, I was unable to retrieve the data! Is this a situation where I need to use .then()?
 
 	2) When I hit New Board, it clears the board. I am unable to run all the functions at once to get a new game started
-	so I split the functions up and left a few in "Start Game". Still, after hitting New Board - the answers show up before the questions.
-	Most importantly: the fillTable() function won't run when put along with the other functions. Why is this? This is the main reason
-	I used different buttons for START GAME and NEW BOARD.
+	   so I split the functions up and left a few in "Start Game". Still, after hitting New Board - the answers show up before the questions.
+	   Most importantly: the fillTable() function won't run when put along with the other functions. Why is this? This is the main reason
+	   I used different buttons for START GAME and NEW BOARD.
 
-	3) I could not 
+	3) Right now, we are using the first 5 questions and answery from the array. I could not figure out how to get random questions from the
+	   arrays. This may be because I handle this code on each Click and not when the initial TDs are made! Furthermore, I do not use .show() in the
+	   handleClick() array. I think this will make sense when I look at the answer solution.
 	*/
-	//===================
-	//ISSUES:
-
-	//1) Pick RANDOM questions from the list. 
-	//2) FIX THE RESTART BUTTON!!!
 	//====================================================
-
-
-
 
 
 	// categories is the main data structure for the app; it looks like this:
@@ -160,7 +154,6 @@ document.addEventListener("DOMContentLoaded", () => {
 				newTr.append(newTd)
 			})
 		}
-
 	}
 
 	/** Handle clicking on a clue: show the question or answer.
@@ -185,31 +178,11 @@ document.addEventListener("DOMContentLoaded", () => {
 			for (let i = 0; i <= 4; i++) {
 				let randomClueIdx = Math.floor(Math.random() * clue.length + 1)
 
-				//TESTING CODE FOR ACTIVE AND HIDDEN DISPLAY OF Q&A
-				// let question = document.createElement('div')
-				// question.innerText = clue[randomClueIdx].question
-				// question.style.color = "white"
-				// // question.style.fontSize = "1.5em"
-				// question.display = 'block'
-				// target.append(question)
-
-				// let answer = document.createElement('div')
-				// answer.innerTet = clue[randomClueIdx].answer
-				// answer.display = 'none'
-				// target.append(answer)
-
-				// if (question.display === 'block') {
-				// 	answer.display = 'block'
-				// 	question.display = 'none'
-				// }
-
-
 				//If the selected TD is included in catValues
 				if (catValues.includes(target.innerText)) {
 
 					//if column # matches selected TD, turn selecter TD into corresponding QUESTION
 					if (target.id == `td-${i}`) {
-
 						target.innerText = clue[i].question
 						target.style.color = "white"
 						target.style.fontSize = "1.5em"
@@ -253,16 +226,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	}).hide().fadeIn(fade)
 
-	/** On click of restart button, restart game. */
+	/** NOTE FROM OMAR: On click of restart button, restart game. */
 	//   Had to reload the page in order to get it to work. 
-	//   When I cleared the text and restarted the functions, I noticed that clicking
-	//   on the "?" resulted in seeing the ANSWER without being able to see the QUESTION :(
+	//   Initially, I tried to clear the text and restart the functions, but I noticed that when I did that, clicking
+	//   on the numbers resulted in seeing the ANSWER without being able to see the QUESTION firt. :(
 
 
 
 	/** On page load, setup and start & add event handler for clicking clues */
-
-	//   was unable to get the fillTable function working on page Load as well, implemented a START button instead.	
+	//   was unable to get the fillTable function working on page Load as well, which is why I implemented a START button instead.	
 	$('document').ready(function (e) {
 		console.log('dom loaded')
 		setupAndStart();
