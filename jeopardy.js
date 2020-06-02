@@ -6,7 +6,21 @@ document.addEventListener("DOMContentLoaded", () => {
 	1) I always had to push my data into an array outside of the function instead of utilizing
 	   the promise function and using "return". When I tried the "return" method, every time I
 	   called the function inside of another function, I was unable to retrieve the data! Is this a situation where I need to use .then()?
-
+	   
+	   ---
+	   
+  Probably. Next time this happens, please save the non working code somewhere (Perhaps as an earlier commit?) so we can go through it together.
+  The thing is there's a time for asynchronous code and a time for syncronous.
+  
+  You need to be very clear on wether your code can go on even without the value you're fetching or not. In case there's nothing useful for your application to do without this information you should use the await keyword (thus turning an otherwise async call into a sync one).
+  Bear in mind that, by using the await keyword your function will have to be declared as async (even though it will not necessarily return a promise object).
+  
+  If, on the other hand there is stuff to be done in parallel, you're better off writing a callback to be used as argument to the then() method of the promise object.
+  
+  The point is there's just one point in time where you can count on the value being there for you and that is when the promise is effectively resolved.
+  
+  How can you make sure your application has passed such a point? You either wait for the promise to resolve without doing anything else (a.k.a. await) or you define a function to be executed upone promise resolution and write some more code which doesn't depend on the promise result.
+  
 	2) When I hit New Board, it clears the board. I am unable to run all the functions at once to get a new game started
 	   so I split the functions up and left a few in "Start Game". Still, after hitting New Board - the answers show up before the questions.
 	   Most importantly: the fillTable() function won't run when put along with the other functions. Why is this? This is the main reason
