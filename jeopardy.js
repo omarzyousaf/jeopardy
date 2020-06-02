@@ -11,6 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
 	   so I split the functions up and left a few in "Start Game". Still, after hitting New Board - the answers show up before the questions.
 	   Most importantly: the fillTable() function won't run when put along with the other functions. Why is this? This is the main reason
 	   I used different buttons for START GAME and NEW BOARD.
+	   
+	   ---
+	   
+It's a little hard to say without seeing it happening... if you have a version of the code which is behaving as you describe we can look at it and figure it out together.
 
 	3) Right now, we are using the first 5 questions and answery from the array. I could not figure out how to get random questions from the
 	   arrays. This may be because I handle this code on each Click and not when the initial TDs are made! Furthermore, I do not use .show() in the
