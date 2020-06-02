@@ -1,3 +1,18 @@
+let categories = [];
+let categoryInfo = [];
+let NUM_CATEGORIES = 6
+let catValues = ['100', '200', '300', '400', '500']
+let fade = 1000
+
+function getRandomQuestion(category)
+{
+	console.log('Category ' + category.title + ' has ' + category.clueArray.length + ' clues');
+
+	let randomIndex = Math.floor(Math.random() * category.clueArray.length);
+
+        console.log('Question with index ' + randomIndex + ' = "' + category.clueArray[randomIndex].question + '"' );
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
 	//====================================================
@@ -12,9 +27,16 @@ document.addEventListener("DOMContentLoaded", () => {
 	   Most importantly: the fillTable() function won't run when put along with the other functions. Why is this? This is the main reason
 	   I used different buttons for START GAME and NEW BOARD.
 
-	3) Right now, we are using the first 5 questions and answery from the array. I could not figure out how to get random questions from the
+	3) Right now, we are using the first 5 questions and answers from the array. I could not figure out how to get random questions from the
 	   arrays. This may be because I handle this code on each Click and not when the initial TDs are made! Furthermore, I do not use .show() in the
 	   handleClick() array. I think this will make sense when I look at the answer solution.
+	   
+	   ---
+	   
+I'm a little confused here... why did you define all of your variables and functions inside the DOMContentLoaded listener? Probably that's what's messing your code (which might explain point 2).
+
+You probably want to define all of them outside the event listener and only make the appropriate calls within.
+
 	*/
 	//====================================================
 
@@ -37,12 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	//    },
 	//    ...
 	//  ]
-
-	let categories = [];
-	let categoryInfo = [];
-	let NUM_CATEGORIES = 6
-	let catValues = ['100', '200', '300', '400', '500']
-	let fade = 1000
 
 	/** Get NUM_CATEGORIES random category from API.
 	 *
