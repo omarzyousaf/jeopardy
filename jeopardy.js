@@ -53,6 +53,49 @@ document.addEventListener("DOMContentLoaded", () => {
 			params: {
 				count: NUM_CATEGORIES,
 				//offsets the starting ID, therefore, randomizes IDs everytime.
+/**
+This isn't really true. It's a very particular case, but, should the random produce the same number twice you'd get the same sequence more than once.
+In fact, I believe this to be a great opportunity to experiment with JS's async nature.
+
+Try something like this:
+
+<script type="text/javascript">
+        let categories = [];
+        let spawn = 5;
+
+        let catFiller = setInterval(function() {
+                let offset;
+
+                if ( categories.length < 5 ) {
+                        for ( let i = 0; i < spawn; i++ ) {
+                                offset = Math.floor(Math.random() * 1000);
+                                console.log('Spawning one with offset ' + offset);
+                                axios.get(
+                                        'http://jservice.io/api/categories', 
+                                        {
+                                                params: {
+                                                        count: 1,
+                                                        offset: offset 
+                                                }
+                                        })
+                                        .then(function(value) {
+                                                let id = value.data[0].id;
+                                                console.log('Got one! Id = ' + id );
+                                                if (categories.indexOf(id) == -1) {
+                                                        console.log('A new one, adding');
+                                                        categories.push(id);
+                                                        spawn--;
+                                                } else {
+                                                        console.log('Duplicated, try again');
+                                                }
+                                        });
+                        }
+                } else {
+                        clearInterval(catFiller);
+                }
+        }, 1000 );
+</script>
+*/
 				offset: Math.floor(Math.random() * 1000)
 			}
 		});
